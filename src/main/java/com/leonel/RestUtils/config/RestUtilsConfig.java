@@ -1,6 +1,8 @@
 package com.leonel.RestUtils.config;
 
 
+import com.leonel.RestUtils.service.ViaCepService;
+import feign.Contract;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
