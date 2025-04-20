@@ -4,12 +4,9 @@ package com.leonel.RestUtils.endereco;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Table(name = "enderecos")
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(of = "cep")
 public class Endereco {
     @Id
