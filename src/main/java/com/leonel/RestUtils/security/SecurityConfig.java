@@ -38,15 +38,21 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/login").permitAll()
                     .requestMatchers(HttpMethod.POST, "/authenticate").permitAll()
                     .requestMatchers("/swagger-ui").hasRole("ADMIN")
                     .anyRequest().authenticated()
             )
-            .httpBasic(Customizer.withDefaults()) // Modal de login
+                .formLogin(Customizer.withDefaults()/*form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
+                */)
+            /*.httpBasic(Customizer.withDefaults()) // Modal de login
             .oauth2ResourceServer(
-                    conf -> conf.jwt(Customizer.withDefaults()));
+                    conf -> conf.jwt(Customizer.withDefaults()))*/;
         return http.build();
     }
 

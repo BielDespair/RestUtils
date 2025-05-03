@@ -27,5 +27,4 @@ public class RestUtilsController {
     private ResponseEntity<Boolean> validarCpf(@RequestParam String cpf) {
         return ResponseEntity.ok(ValidarCPF.cpfValido(cpf));
     }
-
 }
