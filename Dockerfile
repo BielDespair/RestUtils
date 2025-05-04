@@ -1,10 +1,18 @@
-FROM openjdk:21
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
 WORKDIR /app
 
-COPY target/RestUtils-0.0.1-SNAPSHOT.jar app.jar
-COPY src/main/resources/keystore.jks /app/resources/keystore.jks
+COPY . .
+RUN mvn clean package -DskipTests
 
+FROM eclipse-temurin:21
+
+WORKDIR /app
+
+COPY --from=builder /app/target/RestUtils-0.0.1-SNAPSHOT.jar app.jar
+
+COPY src/main/resources/keystore.jks /app/keystore.jks
 
 EXPOSE 8443
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
